@@ -1,0 +1,11 @@
+services: 
+
+ db-postgres:
+    image: postgres
+    restart: always
+    ports:
+     - "5454:5432"
+    container_name: "db-api-tasks"
+    environment:
+      POSTGRES_USER: pguser
+      POSTGRES_PASSWORD: pgpass
