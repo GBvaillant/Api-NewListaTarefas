@@ -27,5 +27,5 @@ model Task {
   userId   Int
   author   User   @relation(fields: [userId], references: [id])
 
-  @@map("tasks")
+  @@map("tasks") 
 }
