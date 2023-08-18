@@ -3,6 +3,7 @@ CREATE TABLE "tasks" (
     "id" SERIAL NOT NULL,
     "text" TEXT NOT NULL,
     "category" TEXT NOT NULL,
+    "complete" BOOLEAN NOT NULL,
     "userId" INTEGER NOT NULL,
 
     CONSTRAINT "tasks_pkey" PRIMARY KEY ("id")

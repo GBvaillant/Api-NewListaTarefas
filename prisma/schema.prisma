@@ -21,11 +21,12 @@ model User {
 }
 
 model Task {
-  id       Int    @id @default(autoincrement())
+  id       Int     @id @default(autoincrement())
   text     String
   category String
+  complete Boolean
   userId   Int
-  author   User   @relation(fields: [userId], references: [id])
+  author   User    @relation(fields: [userId], references: [id])
 
-  @@map("tasks") 
+  @@map("tasks")
 }
