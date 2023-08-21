@@ -1,6 +1,5 @@
 import express from 'express'
 import cors from 'cors'
-import bodyParser from 'body-parser'
 import taskRouter from './routes/taskRouter'
 import userRouter from './routes/userRouter'
 
@@ -9,7 +8,7 @@ const PORT = 5050
 
 app.use(cors())
 app.use(express.json())
-app.use(bodyParser.urlencoded({ extended: true }))
+
 
 taskRouter(app)
 userRouter(app)
@@ -21,4 +20,4 @@ app.get('/', (req, res) => {
 app.listen(PORT, () => {
     console.log('Server runing 🚀')
 })
- 
+  

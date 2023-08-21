@@ -7,7 +7,7 @@ export default {
     async createUser(req: Request, res: Response) {
         try {
             const { username, email, password } = req.body
-            const confirmPass = req.body.confirmSenha
+            const confirmPass = req.body.confirmPass
             const hash = await bcrypt.hash(password, 10)
             const userExist = await prisma.user.findUnique({
                 where: {
@@ -43,11 +43,15 @@ export default {
 
                 }
             })
+            
+            console.log('Novo user criado !!')
+
             return res.json({
                 err: false,
                 msg: 'User criado com sucesso !!',
                 user
             })
+
 
         } catch (err) {
             return res.json({ msg: err.message })
