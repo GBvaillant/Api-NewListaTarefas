@@ -1,5 +1,6 @@
 import { Request, Response } from 'express'
 import bcrypt from 'bcrypt'
+import jwt from 'jsonwebtoken'
 import { prisma } from '../database'
 
 export default {
@@ -37,13 +38,14 @@ export default {
                     password: hash
                 },
                 select: {
+                    id: true,
                     username: true,
                     email: true,
                     password: false
 
                 }
             })
-            
+
             console.log('Novo user criado !!')
 
             return res.json({
@@ -85,5 +87,46 @@ export default {
         } catch (err) {
             return res.json({ msg: err.message })
         }
+    },
+
+    async login(req: Request, res: Response) {
+        try {
+            const { username, password } = req.body
+
+            const user = await prisma.user.findUnique({
+                where: {
+                    username
+                }
+            })
+            
+
+            if (!user) {
+                res.json({
+                    err: true,
+                    msg: 'Usuário ou senha inválidos'
+                })
+            }
+            const verifyPass = await bcrypt.compare(password, user.password)
+
+            if (!verifyPass) {
+                res.json({
+                    err: true,
+                    msg: 'Usuário ou senha inválidos'
+                })
+            }
+
+            const token = jwt.sign({ id: user.id }, process.env.JWT_HASH, {
+                expiresIn: '8h'
+            })
+            return res.json({
+                err: false,
+                msg: 'Token gerado',
+                user,
+                token
+            })
+        } catch (err) {
+            return res.json({ msg: err.message })
+        }
+
     }
 }
