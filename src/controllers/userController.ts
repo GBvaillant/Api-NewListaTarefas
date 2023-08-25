@@ -3,6 +3,7 @@ import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 import { prisma } from '../database'
 
+
 export default {
 
     async createUser(req: Request, res: Response) {
@@ -98,7 +99,7 @@ export default {
                     username
                 }
             })
-            
+
 
             if (!user) {
                 res.json({
@@ -127,6 +128,17 @@ export default {
         } catch (err) {
             return res.json({ msg: err.message })
         }
+    },
+
+    async getProfile(req: Request, res: Response) {
+
+        const user = req.user
+        return res.json({
+            err: false,
+            msg: 'Usuario logado',
+            user
+
+        })
 
     }
 }
